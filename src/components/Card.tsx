@@ -1,13 +1,23 @@
 import "../App.css"
-const Card = ({el, setAlerta, setMensaje}) => {
+type CardProps = {
+  el: string,
+  setAlerta: React.Dispatch<React.SetStateAction<boolean>>,
+  setMensaje: React.Dispatch<React.SetStateAction<string>>
+}
 
-  const handleCopyColor = (color) => {
+const Card = ({el, setAlerta, setMensaje}: CardProps) => {
+
+  const handleCopyColor = (color : string) => {
     console.log(color);
     navigator.clipboard.writeText(color)
     .then(() => {
         console.log('texto copiado');
         setAlerta(true);
         setMensaje('Texto copiado')
+        setTimeout(() => {
+          setMensaje('');
+          setAlerta(false);
+        }, 2000);
     })
 
     .catch(() => {
